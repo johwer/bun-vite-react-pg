@@ -1,6 +1,6 @@
 # bun-vite-react-pg
 
-This project contains part following parts Bun, Hono, Zod
+This project contains part following parts Bun, Hono, Zod, Vite, Shadcn
 
 !["Screenshot"](am.jpg)
 

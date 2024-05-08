@@ -47,6 +47,10 @@ const expensesRoute = new Hono()
     c.status(201);
     return c.json(expense);
   })
+  .get("/total-spent", (c) => {
+    const totalSpent = expenses.reduce((acc, e) => acc + e.amount, 0);
+    return c.json({ totalSpent });
+  })
   .get(`/:id`, async (c) => {
     console.log(c.req.param(`id`));
     //console.log(uuidReg.toString());
@@ -70,6 +74,7 @@ const expensesRoute = new Hono()
     }
     return c.json({ expense });
   })
+
   .delete(`/:id`, async (c) => {
     const { id } = await c.req.param();
     try {

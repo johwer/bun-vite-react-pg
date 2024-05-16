@@ -47,7 +47,9 @@ const expensesRoute = new Hono()
     c.status(201);
     return c.json(expense);
   })
-  .get("/total-spent", (c) => {
+  .get("/total-spent", async (c) => {
+    //await new Promise((resolve) => setTimeout(resolve, 2000));
+    //console.log(expenses, "expenses");
     const totalSpent = expenses.reduce((acc, e) => acc + e.amount, 0);
     return c.json({ totalSpent });
   })

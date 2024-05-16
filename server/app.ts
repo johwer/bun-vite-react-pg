@@ -13,7 +13,7 @@ app.use("*", logger());
 // });
 // app.get("/test", (c) => c.json({ message: "Test" }));
 
-app.route("/api/expenses", expensesRoute);
+const apiRoutes = app.basePath("api").route("/expenses", expensesRoute);
 
 //app.use("*", serveStatic({ root: "./frontend/dist" }));
 app.get("*", serveStatic({ root: "./frontend/dist" }));
@@ -30,3 +30,4 @@ app.get(
 //app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
 
 export default app;
+export type ApiRoutes = typeof apiRoutes;

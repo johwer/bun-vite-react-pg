@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+
+//import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,18 +10,22 @@ import {
 } from "@/components/ui/card";
 
 import { api } from "@/lib/api";
+
+export const Route = createFileRoute("/")({
+  component: Index,
+});
 import { useQuery } from "@tanstack/react-query";
 
 async function getTotalSpent() {
-  const res = await fetch("/api/expenses/total-spent");
-  console.log(res, " res");
+  const res = await api.expenses["total-spent"].$get();
+  //const res = await fetch("/api/expenses/total-spent");
   if (!res.ok) {
     throw new Error("Network response was not ok");
   }
   return res.json();
 }
 
-function App() {
+function Index() {
   //const [totalSpent, setTotalSpent] = useState(0);
 
   // Queries
@@ -58,5 +64,3 @@ function App() {
     </Card>
   );
 }
-
-export default App;

@@ -8,13 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
-import { useQuery } from "@tanstack/react-query";
 
 async function getTotalSpent() {
   const res = await api.expenses["total-spent"].$get();
@@ -33,22 +32,6 @@ function Index() {
     queryKey: ["get-total-spent"],
     queryFn: getTotalSpent,
   });
-
-  //Rewrite this with use with React 19
-  //const totalSpent = use(app.expenses["total-spent"].$get());
-  // useEffect(() => {
-  //   async function fetchTotalSpent() {
-  //     const res = await api.expenses["total-spent"].$get();
-  //     //const res = await fetch("/api/expenses/total-spent");
-  //     const data = await res.json();
-  //     setTotalSpent(data.totalSpent);
-  //   }
-  //   fetchTotalSpent();
-  // }, []);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;

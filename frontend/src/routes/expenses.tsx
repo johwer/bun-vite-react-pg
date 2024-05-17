@@ -10,12 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/expenses")({
   component: Expenses,
 });
 
 async function getAllExpenses() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const res = await api.expenses.$get();
   //const res = await fetch("/api/expenses/total-spent");
   if (!res.ok) {
@@ -40,19 +42,38 @@ function Expenses() {
         <TableCaption>A list of all expenses</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Id</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Amount</TableHead>
+            <TableHead>Description</TableHead>
+            <TableHead>Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {isPending
-            ? `...`
+            ? Array(2)
+                .fill(0)
+                .map((_, i) => (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                    </TableCell>
+                  </TableRow>
+                ))
             : data?.expenses?.map((expense) => (
                 <TableRow key={expense.id}>
-                  <TableCell className="font-medium">{expense.id}</TableCell>
                   <TableCell>{expense.title}</TableCell>
                   <TableCell>{expense.amount}</TableCell>
+                  <TableCell>{expense.description}</TableCell>
+                  <TableCell>{expense.date}</TableCell>
                 </TableRow>
               ))}
         </TableBody>
